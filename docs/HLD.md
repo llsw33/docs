@@ -6,6 +6,12 @@
 - 后端：Spring Boot 3 + Spring Security + JWT + WebSocket(STOMP)
 - 数据：PostgreSQL + Redis
 
+### 1.1 逻辑分层
+- 表现层：Vue3 + Element Plus
+- 应用层：REST API + WebSocket 事件
+- 领域层：项目、看板、聊天、活动流
+- 基础设施层：数据库、缓存、对象存储（预留）
+
 ## 2. 模块划分
 ### 2.1 前端模块
 - 认证模块：登录/注册/刷新
@@ -30,23 +36,30 @@
 3. 看板拖拽完成后保存排序到数据库
 4. 后端广播 WebSocket 事件给同项目在线成员
 
-## 4. 关键设计要点
+## 4. 安全与权限
+- JWT 认证与过期策略
+- RBAC 与项目成员校验
+- WebSocket 订阅时校验项目成员身份
+
+## 5. 关键设计要点
 - position 字段使用“整数间隔或浮点策略”减少全量重排
 - WebSocket 事件包含 cardId、fromListId、toListId、newPosition
 - RBAC：用户必须是项目成员
+- 聊天与活动流写入前进行内容长度校验
 
-## 5. 部署架构
+## 6. 部署架构
 - docker-compose 运行：
   - backend（8080）
   - frontend（5173 或 nginx:80）
   - postgres
   - redis
 
-## 6. 监控与日志
+## 7. 监控与日志
 - Spring Boot Actuator
 - 访问日志 + 审计日志
+- WebSocket 连接数监控与错误告警
 
-## 7. 扩展规划
+## 8. 扩展规划
 - 引入 Yjs 进行文档与白板协同
 - 多项目全局搜索
 - 企业级权限与审计

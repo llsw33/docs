@@ -6,6 +6,7 @@
 
 ### 1.2 Project
 - id, name, description, ownerId, createdAt
+- status（active/archived）
 
 ### 1.3 Board/List/Card
 - List：id, projectId, title, position
@@ -16,6 +17,7 @@
 
 ### 1.5 Activity
 - id, projectId, actorId, type, payloadJson, createdAt
+- type：CARD_CREATED、CARD_MOVED、COMMENT_CREATED、MEMBER_JOINED
 
 ## 2. 服务层设计
 ### 2.1 AuthService
@@ -37,6 +39,7 @@
 - createCard(listId, payload)
 - updateCard(cardId, payload)
 - moveCard(cardId, fromListId, toListId, newPosition)
+- reorderCards(listId, orderedCardIds)
 
 ### 2.4 ChatService
 - listMessages(projectId, before, limit)
@@ -63,6 +66,11 @@
 2. 后端保存消息
 3. 广播 `MESSAGE_CREATED`
 
+### 3.3 邀请成员流程
+1. 负责人生成邀请链接 token
+2. 成员通过 token 加入项目
+3. 记录活动流 MEMBER_JOINED
+
 ## 4. WebSocket 事件 payload 设计（示例）
 ```json
 {
@@ -84,12 +92,14 @@
 ## 6. 权限设计
 - 项目访问：必须是 project_members
 - 管理员角色可访问 `/app/admin/users`
+- 仅项目 owner 可生成邀请链接（可配置）
 
 ## 7. 错误码设计（示例）
 - 400：参数校验失败
 - 401：未登录
 - 403：无权限或非项目成员
 - 404：资源不存在
+- 409：拖拽冲突/版本冲突（可选）
 
 ## 8. 日志与审计
 - 业务事件写入 activities

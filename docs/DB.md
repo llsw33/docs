@@ -25,16 +25,19 @@
 
 ### 3.2 roles
 | 字段 | 类型 | 约束 | 说明 |
+| --- | --- | --- | --- |
 | id | bigserial | PK | 角色 ID |
 | name | varchar(50) | UNIQUE | 角色名称 |
 
 ### 3.3 user_roles
 | 字段 | 类型 | 约束 | 说明 |
+| --- | --- | --- | --- |
 | user_id | bigint | FK users.id | 用户 ID |
 | role_id | bigint | FK roles.id | 角色 ID |
 
 ### 3.4 projects
 | 字段 | 类型 | 约束 | 说明 |
+| --- | --- | --- | --- |
 | id | bigserial | PK | 项目 ID |
 | name | varchar(200) | NOT NULL | 项目名 |
 | description | text | NULL | 描述 |
@@ -43,21 +46,27 @@
 
 ### 3.5 project_members
 | 字段 | 类型 | 约束 | 说明 |
+| --- | --- | --- | --- |
 | project_id | bigint | FK projects.id | 项目 ID |
 | user_id | bigint | FK users.id | 用户 ID |
 | member_role | varchar(50) | NOT NULL | 成员角色 |
 | joined_at | timestamp | NOT NULL | 加入时间 |
 | last_read_at | timestamp | NULL | 最后读时间 |
+| status | varchar(20) | NOT NULL | 成员状态（active/inactive） |
 
 ### 3.6 lists
 | 字段 | 类型 | 约束 | 说明 |
+| --- | --- | --- | --- |
 | id | bigserial | PK | 列 ID |
 | project_id | bigint | FK projects.id | 项目 ID |
 | title | varchar(200) | NOT NULL | 列标题 |
 | position | bigint | NOT NULL | 排序 |
+| created_at | timestamp | NOT NULL | 创建时间 |
+| updated_at | timestamp | NOT NULL | 更新时间 |
 
 ### 3.7 cards
 | 字段 | 类型 | 约束 | 说明 |
+| --- | --- | --- | --- |
 | id | bigserial | PK | 卡片 ID |
 | list_id | bigint | FK lists.id | 所属列 |
 | title | varchar(200) | NOT NULL | 标题 |
@@ -68,9 +77,11 @@
 | position | bigint | NOT NULL | 排序 |
 | created_at | timestamp | NOT NULL | 创建时间 |
 | updated_at | timestamp | NOT NULL | 更新时间 |
+| status | varchar(20) | NULL | 业务状态（todo/doing/done） |
 
 ### 3.8 labels
 | 字段 | 类型 | 约束 | 说明 |
+| --- | --- | --- | --- |
 | id | bigserial | PK | 标签 ID |
 | project_id | bigint | FK projects.id | 项目 ID |
 | name | varchar(100) | NOT NULL | 标签名称 |
@@ -78,11 +89,13 @@
 
 ### 3.9 card_labels
 | 字段 | 类型 | 约束 | 说明 |
+| --- | --- | --- | --- |
 | card_id | bigint | FK cards.id | 卡片 ID |
 | label_id | bigint | FK labels.id | 标签 ID |
 
 ### 3.10 comments
 | 字段 | 类型 | 约束 | 说明 |
+| --- | --- | --- | --- |
 | id | bigserial | PK | 评论 ID |
 | card_id | bigint | FK cards.id | 卡片 ID |
 | user_id | bigint | FK users.id | 评论人 |
@@ -91,14 +104,17 @@
 
 ### 3.11 chat_messages
 | 字段 | 类型 | 约束 | 说明 |
+| --- | --- | --- | --- |
 | id | bigserial | PK | 消息 ID |
 | project_id | bigint | FK projects.id | 项目 ID |
 | user_id | bigint | FK users.id | 发送人 |
 | content | text | NOT NULL | 内容 |
 | created_at | timestamp | NOT NULL | 创建时间 |
+| edited_at | timestamp | NULL | 编辑时间 |
 
 ### 3.12 activities
 | 字段 | 类型 | 约束 | 说明 |
+| --- | --- | --- | --- |
 | id | bigserial | PK | 活动 ID |
 | project_id | bigint | FK projects.id | 项目 ID |
 | actor_id | bigint | FK users.id | 操作人 |
@@ -113,6 +129,7 @@
 - cards(list_id, position)
 - chat_messages(project_id, created_at)
 - activities(project_id, created_at)
+- cards(assignee_id, due_date)
 
 ## 5. 数据一致性与约束
 - 删除项目时级联删除 lists、cards、chat_messages、activities

@@ -11,6 +11,8 @@
   "data": {}
 }
 ```
+- 分页参数（通用）：`page`、`size` 或 `before`、`limit`
+- 时间格式：ISO 8601（UTC）
 
 ## 2. 认证接口
 ### 2.1 注册
@@ -22,6 +24,7 @@
 - POST `/api/auth/login`
 - 请求：`{ "email": "", "password": "" }`
 - 响应：JWT + refresh token
+- 备注：refresh token 建议存于 HttpOnly Cookie
 
 ### 2.3 刷新
 - POST `/api/auth/refresh`
@@ -57,6 +60,20 @@
 
 ### 3.8 成员列表
 - GET `/api/projects/{id}/members`
+- 响应示例：
+```json
+{
+  "data": [
+    {
+      "userId": 1,
+      "name": "Alice",
+      "memberRole": "owner",
+      "joinedAt": "2025-01-01T10:00:00Z",
+      "lastReadAt": "2025-01-02T12:00:00Z"
+    }
+  ]
+}
+```
 
 ## 4. 看板接口
 ### 4.1 列列表
@@ -82,6 +99,7 @@
 ### 4.6 卡片移动/拖拽
 - POST `/api/projects/{id}/board/cards/{cardId}/move`
 - 请求：`{ "fromListId": 1, "toListId": 2, "position": 3500 }`
+- 响应：更新后的卡片对象
 
 ## 5. 聊天接口
 ### 5.1 获取消息
@@ -124,3 +142,19 @@
 ### 7.3 在线状态
 - topic：`/topic/projects/{projectId}/presence`
 - events：USER_ONLINE, USER_OFFLINE
+
+### 7.4 通用事件结构
+```json
+{
+  "event": "CARD_MOVED",
+  "projectId": 1,
+  "actorId": 2,
+  "payload": {}
+}
+```
+
+## 8. 错误码规范（示例）
+- 400 参数错误
+- 401 未登录
+- 403 无权限
+- 404 资源不存在
