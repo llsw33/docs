@@ -59,6 +59,15 @@
 - STOMP Broker（内置或外部）
 - Cache（内存缓存，用于会话与热点数据）
 
+### 6.2 本地运行关键配置（建议）
+- 环境变量：
+  - `DB_URL=jdbc:postgresql://localhost:5432/syncoboard`
+  - `DB_USER=syncoboard`
+  - `DB_PASSWORD=******`
+  - `JWT_SECRET=******`
+- 端口约定：后端 8080，前端 5173
+- WebSocket：使用 STOMP，前端同域或配置 CORS 与允许的 WebSocket origin
+
 ## 7. 监控与日志
 - Spring Boot Actuator
 - 访问日志 + 审计日志

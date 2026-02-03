@@ -11,6 +11,10 @@
 ### 1.3 Board/List/Card
 - List：id, projectId, title, position
 - Card：id, listId, title, description, priority, dueDate, assigneeId, position, createdAt, updatedAt
+ - Card 扩展属性：
+   - labels[]（多对多）
+   - comments[]（时间倒序）
+   - status（todo/doing/done）
 
 ### 1.4 ChatMessage
 - id, projectId, userId, content, createdAt
@@ -71,11 +75,13 @@
 3. 后端更新数据库
 4. 后端广播 WebSocket `CARD_MOVED`
 5. 在线成员 UI 同步更新
+6. 记录活动流 CARD_MOVED
 
 ### 3.2 聊天消息流程
 1. 前端发送消息
 2. 后端保存消息
 3. 广播 `MESSAGE_CREATED`
+4. 更新 project_members.last_read_at
 
 ### 3.3 邀请成员流程
 1. 负责人生成邀请链接 token
@@ -100,11 +106,13 @@
 - 位置字段采用整数间隔（默认 1000）
 - 插入时取相邻位置中位数；必要时触发局部重排
 - 当位置间隔不足时进行局部重排（最多 50 条）
+ - 重排原则：保持相对顺序，仅调整 position 字段
 
 ## 6. 权限设计
 - 项目访问：必须是 project_members
 - 管理员角色可访问 `/app/admin/users`
 - 仅项目 owner 可生成邀请链接（可配置）
+ - 删除项目需 owner 权限
 
 ## 7. 错误码设计（示例）
 - 400：参数校验失败

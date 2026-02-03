@@ -21,6 +21,7 @@
 ```
 - 分页参数（通用）：`page`、`size` 或 `before`、`limit`
 - 时间格式：ISO 8601（UTC）
+ - 字段命名：JSON 采用 camelCase
 
 ## 2. 认证接口
 ### 2.1 注册
@@ -44,6 +45,7 @@
 ## 3. 项目接口
 ### 3.1 项目列表
 - GET `/api/projects`
+ - 支持参数：`page`、`size`、`keyword`
 
 ### 3.2 创建项目
 - POST `/api/projects`
@@ -86,6 +88,7 @@
 ## 4. 看板接口
 ### 4.1 列列表
 - GET `/api/projects/{id}/board/lists`
+ - 响应按 position 升序返回
 
 ### 4.2 创建列
 - POST `/api/projects/{id}/board/lists`
@@ -103,6 +106,7 @@
 - POST `/api/projects/{id}/board/cards`
 - PUT `/api/projects/{id}/board/cards/{cardId}`
 - DELETE `/api/projects/{id}/board/cards/{cardId}`
+ - 更新卡片可部分更新（PATCH 语义）
 
 ### 4.6 卡片移动/拖拽
 - POST `/api/projects/{id}/board/cards/{cardId}/move`
@@ -112,6 +116,7 @@
 ## 5. 聊天接口
 ### 5.1 获取消息
 - GET `/api/projects/{id}/chat/messages?before=timestamp&limit=50`
+ - 返回按 createdAt 倒序
 
 ### 5.2 发送消息
 - POST `/api/projects/{id}/chat/messages`
