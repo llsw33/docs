@@ -16,6 +16,6 @@
 ## 适用范围
 - MVP 目标：看板实时同步 + 项目聊天实时同步
 - 技术栈：Spring Boot 3 + Spring Security + JWT + WebSocket(STOMP)；Vue3 + Element Plus + ECharts
-- 数据存储：PostgreSQL + Redis
+- 数据存储：PostgreSQL + Redis（Redis 可选，可本地直装或使用兼容方案）
 
 如需补充研发计划、测试计划或上线运维手册，可在本目录继续扩展文档。
