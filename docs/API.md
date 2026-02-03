@@ -11,6 +11,14 @@
   "data": {}
 }
 ```
+- 错误响应示例：
+```json
+{
+  "code": 403,
+  "message": "forbidden",
+  "data": null
+}
+```
 - 分页参数（通用）：`page`、`size` 或 `before`、`limit`
 - 时间格式：ISO 8601（UTC）
 
@@ -134,10 +142,37 @@
 ### 7.1 看板
 - topic：`/topic/projects/{projectId}/board`
 - events：CARD_CREATED, CARD_UPDATED, CARD_MOVED, CARD_DELETED, LIST_CREATED, LIST_REORDERED
+- CARD_MOVED payload 示例：
+```json
+{
+  "event": "CARD_MOVED",
+  "projectId": 1,
+  "actorId": 2,
+  "payload": {
+    "cardId": 10,
+    "fromListId": 100,
+    "toListId": 200,
+    "newPosition": 3500
+  }
+}
+```
 
 ### 7.2 聊天
 - topic：`/topic/projects/{projectId}/chat`
 - events：MESSAGE_CREATED
+- MESSAGE_CREATED payload 示例：
+```json
+{
+  "event": "MESSAGE_CREATED",
+  "projectId": 1,
+  "actorId": 2,
+  "payload": {
+    "messageId": 500,
+    "content": "hello",
+    "createdAt": "2025-01-01T10:00:00Z"
+  }
+}
+```
 
 ### 7.3 在线状态
 - topic：`/topic/projects/{projectId}/presence`

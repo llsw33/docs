@@ -46,6 +46,7 @@
 - WebSocket 事件包含 cardId、fromListId、toListId、newPosition
 - RBAC：用户必须是项目成员
 - 聊天与活动流写入前进行内容长度校验
+- WebSocket 事件与 REST 写库保持最终一致性
 
 ## 6. 部署架构
 - docker-compose 运行：
@@ -53,6 +54,11 @@
   - frontend（5173 或 nginx:80）
   - postgres
   - redis
+
+### 6.1 运行时组件
+- API Gateway（后端统一入口）
+- STOMP Broker（内置或外部）
+- Cache（Redis，用于会话与热点数据）
 
 ## 7. 监控与日志
 - Spring Boot Actuator

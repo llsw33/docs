@@ -134,3 +134,8 @@
 ## 5. 数据一致性与约束
 - 删除项目时级联删除 lists、cards、chat_messages、activities
 - 删除 list 时级联删除 cards
+- 建议约束：
+  - cards.position > 0
+  - lists.position > 0
+  - project_members.member_role 枚举（owner/admin/member）
+  - cards.priority 枚举（low/medium/high/urgent）

@@ -53,6 +53,17 @@
 - getProjectKpi(projectId)
 - getProjectCharts(projectId, range)
 
+## 2.7 Repository（示例）
+- UserRepository
+- ProjectRepository
+- BoardRepository（List/Card）
+- ChatRepository
+- ActivityRepository
+
+## 2.8 DTO/VO（示例）
+- CardMoveRequest：cardId、fromListId、toListId、position
+- MessageCreateRequest：content
+
 ## 3. 关键流程
 ### 3.1 卡片拖拽流程
 1. 前端拖拽完成
@@ -88,6 +99,7 @@
 ## 5. 排序策略
 - 位置字段采用整数间隔（默认 1000）
 - 插入时取相邻位置中位数；必要时触发局部重排
+- 当位置间隔不足时进行局部重排（最多 50 条）
 
 ## 6. 权限设计
 - 项目访问：必须是 project_members
@@ -104,3 +116,4 @@
 ## 8. 日志与审计
 - 业务事件写入 activities
 - 关键操作写入审计日志
+- 统一审计字段：actorId、ip、userAgent、timestamp
