@@ -2,7 +2,7 @@
 
 ## 1. 数据库选型
 - PostgreSQL 作为主数据库
-- Redis 用于缓存与 WebSocket session 管理
+- 本地运行不依赖外部缓存服务
 
 ## 2. ER 关系（文本描述）
 - User 与 Project：多对多（project_members）

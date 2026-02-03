@@ -4,13 +4,13 @@
 采用前后端分离架构：
 - 前端：Vue3 + Element Plus + ECharts + SortableJS/vuedraggable
 - 后端：Spring Boot 3 + Spring Security + JWT + WebSocket(STOMP)
-- 数据：PostgreSQL + Redis
+- 数据：PostgreSQL（本地直装）
 
 ### 1.1 逻辑分层
 - 表现层：Vue3 + Element Plus
 - 应用层：REST API + WebSocket 事件
 - 领域层：项目、看板、聊天、活动流
-- 基础设施层：数据库、缓存、对象存储（预留）
+- 基础设施层：数据库、内存缓存、对象存储（预留）
 
 ## 2. 模块划分
 ### 2.1 前端模块
@@ -49,26 +49,15 @@
 - WebSocket 事件与 REST 写库保持最终一致性
 
 ## 6. 部署架构
-提供两种部署方式（任选其一）：
-- 本地直装运行（推荐用于开发/不使用 Docker 的场景）：
-  - backend（8080）
-  - frontend（5173）
-  - postgres（本地服务）
-  - redis（本地服务或兼容替代）
-- docker-compose 运行（可选）：
-  - backend（8080）
-  - frontend（5173 或 nginx:80）
-  - postgres
-  - redis
+仅支持本地直装运行（无 Docker 依赖）：
+- backend（8080）
+- frontend（5173）
+- postgres（本地服务）
 
 ### 6.1 运行时组件
 - API Gateway（后端统一入口）
 - STOMP Broker（内置或外部）
-- Cache（Redis，用于会话与热点数据，可选）
-
-### 6.2 Windows 本地运行提示
-- Redis 在 Windows 上可采用兼容发行版（如 Memurai）或通过 WSL2 运行官方 Redis。
-- 若不启用 Redis，可将缓存/会话配置为内存模式以完成本地跑通。
+- Cache（内存缓存，用于会话与热点数据）
 
 ## 7. 监控与日志
 - Spring Boot Actuator
